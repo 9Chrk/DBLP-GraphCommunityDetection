@@ -44,25 +44,35 @@ dblp-graph-community-detection/
 ├── README.md
 ├── .gitignore
 ├── LICENSE
+│
 ├── docs/
-│   ├── report/              ← PDF report
+│   ├── report/
 │   └── subject/
 │       └── Projet_Algorithmique_2_2026.pdf
+│
 ├── data/
 │   ├── README.md            ← how to obtain the dataset
-│   └── external/            ← place dblp.xml.gz + dblp.dtd here (git-ignored)
+│   └── external/            ← place <dblp.xml.gz> here (git-ignored)
+│       └── dblp.dtd         ← DTD file for the parser (included for convenience)
+│
 ├── results/
 │   ├── task1/               ← output files for Task 1
 │   └── task2/               ← output files for Task 2
+│
 └── src/
     ├── main/java/be/ulb/dblp/
-    │   ├── Main.java         ← entry point
-    │   ├── io/               ← file reading / writing helpers
-    │   ├── model/            ← Graph, Node, Edge domain classes
-    │   ├── parsing/          ← DBLP XML SAX/StAX parser
+    │   ├── Main.java                           ← entry point
+    │   ├── io/                                 ← file reading / writing helpers
+    │   ├── model/                              ← Graph, Node, Edge domain classes
+    │   ├── parsing/                            ← DBLP XML SAX/StAX parser
+    │   │    └── DblpPublicationGenerator.java  ← SAX parser implementation
+    │   │
     │   ├── task1/            ← Task 1 algorithm & runner
     │   ├── task2/            ← Task 2 algorithm & runner
-    │   └── util/             ← shared helpers (timing, formatting, …)
+    │   ├── util/             ← shared helpers (timing, formatting, …)
+    │   └── example/          
+    │       └── ExampleParser.java  ← example of streaming parsing
+    │
     └── test/java/be/ulb/dblp/
 ```
 
