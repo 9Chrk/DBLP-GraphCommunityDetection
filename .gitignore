@@ -22,3 +22,40 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+############## external from the template ##############
+
+# Maven
+target/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated results
+results/task1/*
+results/task2/*
+
+# External datasets
+/data/external/dblp.xml.gz
+
+# .gitkeep files
+/src/main/java/be/ulb/dblp/util/.gitkeep
+/src/main/java/be/ulb/dblp/task2/.gitkeep
+/src/main/java/be/ulb/dblp/task1/.gitkeep
+/src/main/java/be/ulb/dblp/parsing/.gitkeep
+/src/main/java/be/ulb/dblp/io/.gitkeep
+/results/task2/.gitkeep
+/results/task1/.gitkeep
+/docs/report/.gitkeep
+/data/sample/.gitkeep
+/data/external/.gitkeep
+/src/test/java/be/ulb/dblp/.gitkeep
