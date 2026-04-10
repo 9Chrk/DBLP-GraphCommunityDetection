@@ -18,7 +18,7 @@ public class Main {
 
     public static void main(String[] args) {
         if (args.length < 2) {
-            System.err.println("Usage: dblp-community-analysis.jar <dblp.xml.gz> <dblp.dtd>");
+            System.err.println("Usage: java -jar dblp-community-analysis.jar <dblp.xml.gz> <dblp.dtd>");
             System.exit(1);
         }
 
