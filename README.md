@@ -1,37 +1,37 @@
-# Analyse de communautes DBLP
+# Analyse de communautés DBLP
 ![Java](https://img.shields.io/badge/Langage-Java-F4C27A?style=flat-square&logo=openjdk&logoColor=3A2E2A)
 ![Apache Maven](https://img.shields.io/badge/Compilation-Apache%20Maven-E8B4BC?style=flat-square&logo=apache-maven&logoColor=4A1F2B)
-![License: MIT](https://img.shields.io/badge/Licence-MIT-B7E4C7?style=flat-square&logoColor=1F3D2E)
+![Licence : MIT](https://img.shields.io/badge/Licence-MIT-B7E4C7?style=flat-square&logoColor=1F3D2E)
 
 
-Un projet Java pour l'analyse en streaming des reseaux de collaboration DBLP, incluant la detection de composantes connexes sur des graphes de co-signature non orientes et l'analyse de communautes fortement connexes sur des graphes de collaboration diriges filtres.
+Un projet Java pour l'analyse en streaming des réseaux de collaboration DBLP, incluant la détection de composantes connexes sur des graphes de co-signature non orientés et l'analyse de communautés fortement connexes sur des graphes de collaboration dirigés filtrés.
 
-> **Cours :** Algorithmique 2 (INFO-F203) — BA2, Q2 — Universite Libre de Bruxelles  
-> **Annee academique :** 2025-2026
+> **Cours :** Algorithmique 2 (INFO-F203) — BA2, Q2 — Université Libre de Bruxelles  
+> **Année académique :** 2025-2026
 
 
 ---
 
 ## Vue d'ensemble
 
-Ce projet traite le jeu de donnees XML [DBLP](https://dblp.org/) en mode **streaming** (SAX/StAX) afin d'eviter de charger en memoire le dump complet (~4 Go).  
-Deux taches d'analyse de graphes independantes sont implementees :
+Ce projet traite le jeu de données XML [DBLP](https://dblp.org/) en mode **streaming** (SAX/StAX) afin d'éviter de charger en mémoire l'export complet (~4 Go).  
+Deux tâches d'analyse de graphes indépendantes sont implémentées :
 
-| Tache | Type de graphe | Probleme |
+| Tâche | Type de graphe | Problème |
 |------|-----------------|----------|
-| Tache 1 | Graphe de co-signature non oriente | Trouver toutes les composantes connexes |
-| Tache 2 | Graphe de collaboration dirige filtre | Trouver toutes les composantes fortement connexes (communautes) |
+| Tâche 1 | Graphe de co-signature non orienté | Trouver toutes les composantes connexes |
+| Tâche 2 | Graphe de collaboration dirigé filtré | Trouver toutes les composantes fortement connexes (communautés) |
 
 ---
 
-## Fonctionnalites
+## Fonctionnalités
 
 - ✅ Parseur XML en flux (sans chargement DOM complet)
-- ✅ Construction d'un graphe non oriente a partir des co-signatures DBLP
-- ✅ Detection des composantes connexes (Tache 1)
-- ✅ Construction d'un graphe dirige avec filtres configurables
-- ✅ Detection des composantes fortement connexes (Tache 2)
-- ✅ Resultats ecrits dans `results/task1/` et `results/task2/`
+- ✅ Construction d'un graphe non orienté à partir des co-signatures DBLP
+- ✅ Détection des composantes connexes (Tâche 1)
+- ✅ Construction d'un graphe dirigé avec filtres configurables
+- ✅ Détection des composantes fortement connexes (Tâche 2)
+- ✅ Résultats écrits dans `results/task1/` et `results/task2/`
 - ✅ Tests unitaires JUnit 5
 
 ---
@@ -51,25 +51,25 @@ dblp-graph-community-detection/
 │       └── Projet_Algorithmique_2_2026.pdf
 │
 ├── data/
-│   ├── README.md            ← comment obtenir le jeu de donnees
-│   └── external/            ← placez <dblp.xml.gz> ici (ignore par Git)
+│   ├── README.md            ← comment obtenir le jeu de données
+│   └── external/            ← placez <dblp.xml.gz> ici (ignoré par Git)
 │       └── dblp.dtd         ← fichier DTD pour le parseur (fourni)
 │
 ├── results/
-│   ├── task1/               ← fichiers de sortie pour la Tache 1
-│   └── task2/               ← fichiers de sortie pour la Tache 2
+│   ├── task1/               ← fichiers de sortie pour la Tâche 1
+│   └── task2/               ← fichiers de sortie pour la Tâche 2
 │
 └── src/
     ├── main/java/be/ulb/dblp/
-    │   ├── Main.java                           ← point d'entree
+    │   ├── Main.java                           ← point d'entrée
     │   ├── io/                                 ← utilitaires de lecture/ecriture
-    │   ├── model/                              ← classes domaine (Graph, Node, Edge)
+    │   ├── model/                              ← classes du domaine (Graph, Node, Edge)
     │   ├── parsing/                            ← analyseur XML DBLP SAX/StAX
-    │   │    └── DblpPublicationGenerator.java  ← implementation du parseur SAX
+    │   │    └── DblpPublicationGenerator.java  ← implémentation du parseur SAX
     │   │
-    │   ├── task1/            ← algorithme et lanceur de la Tache 1
-    │   ├── task2/            ← algorithme et lanceur de la Tache 2
-    │   ├── util/             ← utilitaires partages (timing, formatage, ...)
+    │   ├── task1/            ← algorithme et lanceur de la Tâche 1
+    │   ├── task2/            ← algorithme et lanceur de la Tâche 2
+    │   ├── util/             ← utilitaires partagés (timing, formatage, ...)
     │   └── example/
     │       └── ExampleParser.java  ← exemple d'analyse en flux
     │
@@ -78,21 +78,21 @@ dblp-graph-community-detection/
 
 ---
 
-## ⚙️ Algorithmes utilises
+## ⚙️ Algorithmes utilisés
 
-| Algorithme | Paquet | Complexite temps | Complexite memoire |
+| Algorithme | Paquet | Complexité temporelle | Complexité mémoire |
 |-----------|---------|------------------|--------------------|
 | BFS / DFS (composantes connexes) | `task1` | O(V + E) | O(V) |
-| Union-Find (optionnel, Tache 1) | `util` | O(α(V) · E) | O(V) |
+| Union-Find (optionnel, Tâche 1) | `util` | O(α(V) · E) | O(V) |
 | Kosaraju / Tarjan (CFC) | `task2` | O(V + E) | O(V) |
 
-> Les choix exacts et les preuves de complexite sont detailles dans le rapport (`docs/report/`).
+> Les choix exacts et les preuves de complexité sont détaillés dans le rapport (`docs/report/`).
 
 ---
 
-## 🛠️ Compiler et executer
+## 🛠️ Compiler et exécuter
 
-### Prerequis
+### Prérequis
 
 - Java 17+
 - Maven 3.8+
@@ -103,9 +103,9 @@ dblp-graph-community-detection/
 mvn clean package
 ```
 
-Cela genere `target/dblp-community-analysis.jar` (JAR executable).
+Cela génère `target/dblp-community-analysis.jar` (JAR exécutable).
 
-### Execution
+### Exécution
 
 ```bash
 java -jar target/dblp-community-analysis.jar \
@@ -113,7 +113,7 @@ java -jar target/dblp-community-analysis.jar \
      data/external/dblp.dtd
 ```
 
-### Execution via Maven (sans construire le jar au prealable)
+### Exécution via Maven (sans construire le JAR au préalable)
 
 ```bash
 mvn exec:java -Dexec.args="data/external/dblp.xml.gz data/external/dblp.dtd"
@@ -121,15 +121,15 @@ mvn exec:java -Dexec.args="data/external/dblp.xml.gz data/external/dblp.dtd"
 
 ---
 
-## 💾 Donnees d'entree
+## 💾 Données d'entrée
 
 | Fichier | Description |
 |------|-------------|
-| `dblp.xml.gz` | Export XML DBLP complet (compresse gzip, ~4 Go decompresse) |
-| `dblp.dtd` | DTD necessaire au parseur SAX |
+| `dblp.xml.gz` | Export XML DBLP complet (compressé gzip, ~4 Go décompressé) |
+| `dblp.dtd` | DTD nécessaire au parseur SAX |
 
-Telechargez la derniere version depuis <https://dblp.org/xml/> et placez les deux fichiers dans `data/external/`.  
-Voir [`data/README.md`](data/README.md) pour les details.
+Téléchargez la dernière version depuis <https://dblp.org/xml/> et placez les deux fichiers dans `data/external/`.  
+Voir [`data/README.md`](data/README.md) pour les détails.
 
 ---
 
@@ -138,11 +138,11 @@ Voir [`data/README.md`](data/README.md) pour les details.
 | Chemin | Contenu |
 |------|---------|
 | `results/task1/components.txt` | Une composante connexe par ligne (liste d'identifiants auteurs) |
-| `results/task1/stats.txt` | Statistiques de synthese (nombre de composantes, tailles, ...) |
+| `results/task1/stats.txt` | Statistiques de synthèse (nombre de composantes, tailles, ...) |
 | `results/task2/scc.txt` | Une composante fortement connexe par ligne |
-| `results/task2/stats.txt` | Statistiques de synthese |
+| `results/task2/stats.txt` | Statistiques de synthèse |
 
-*Exemple de noms de fichiers de sortie (a adapter selon votre implementation).* 
+*Exemple de noms de fichiers de sortie (à adapter selon votre implémentation).* 
 
 ---
 
@@ -158,11 +158,11 @@ Les tests unitaires sont dans `src/test/java/be/ulb/dblp/`.
 
 ## Rapport
 
-Le rapport est disponible dans [`docs/report/rapport.pdf`](docs/report/rapport.pdf). Il detaille les choix d'implementation et la complexite des algorithmes utilises.
+Le rapport est disponible dans [`docs/report/rapport.pdf`](docs/report/rapport.pdf). Il détaille les choix d'implémentation et la complexité des algorithmes utilisés.
 
 ---
 
-## Notes de complexite
+## Notes de complexité
 
-L'approche en flux garantit que l'usage memoire est borne par la taille des structures de graphe, et non par la taille brute du XML.  
-L'analyse complete de complexite (temps et memoire) pour chaque algorithme est fournie dans le rapport du projet.
+L'approche en flux garantit que l'usage mémoire est borné par la taille des structures de graphe, et non par la taille brute du XML.  
+L'analyse complète de complexité (temps et mémoire) pour chaque algorithme est fournie dans le rapport du projet.
