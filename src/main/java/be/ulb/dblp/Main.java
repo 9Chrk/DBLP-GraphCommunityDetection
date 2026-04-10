@@ -21,6 +21,7 @@ public class Main {
             System.exit(1);
         }
 
+        // Chemin des paramètres
         Path xmlPath = Path.of(args[0]);
         Path dtdPath = Path.of(args[1]);
 
@@ -29,6 +30,7 @@ public class Main {
         int reportEvery = 100000;
         Path outputDir = Path.of("results", "task1");
 
+        // Récupération des options facultatives
         for (int i = 2; i < args.length; i++) {
             String arg = args[i];
 
@@ -43,11 +45,13 @@ public class Main {
             }
         }
 
+        // Suppression des limites
         System.setProperty("jdk.xml.entityExpansionLimit", "0");
         System.setProperty("jdk.xml.totalEntitySizeLimit", "0");
         System.setProperty("jdk.xml.maxGeneralEntitySizeLimit", "0");
         System.setProperty("jdk.xml.maxParameterEntitySizeLimit", "0");
 
+        // Configuration
         System.out.println("DBLP Community Analysis - Task 1");
         System.out.println("  XML        : " + xmlPath);
         System.out.println("  DTD        : " + dtdPath);
@@ -57,6 +61,7 @@ public class Main {
         System.out.println();
 
         try {
+            // TACHE 1 :
             Runner.run(xmlPath, dtdPath, outputDir, reportEvery, limit);
             System.out.println("Done.");
         }
