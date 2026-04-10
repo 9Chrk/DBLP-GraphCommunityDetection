@@ -11,27 +11,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+
 /**
  * Runs task 1 in online mode while parsing DBLP.
  */
-public final class Task1Runner {
+public final class Runner {
 
-    private Task1Runner() {
+    private Runner() {
     }
 
-    public static void run(Path xmlPath, Path dtdPath, Path outputDir, int reportEvery) throws Exception {
+    public static void run(Path xmlPath, Path dtdPath, Path outputDir, int reportEvery, long limit) throws Exception {
         Files.createDirectories(outputDir);
 
-        Task1CommunityTracker tracker = new Task1CommunityTracker();
-        long publicationCount = 0L;
+        CommunityTracker tracker = new CommunityTracker();
+        long publicationCount = 0;
 
         try (DblpPublicationGenerator generator = new DblpPublicationGenerator(xmlPath, dtdPath, 256)) {
-            while (true) {
+            while (publicationCount < limit) {
                 Optional<DblpPublicationGenerator.Publication> optional = generator.nextPublication();
+
                 if (optional.isEmpty()) {
                     break;
                 }
-
                 publicationCount++;
                 tracker.processPublication(optional.get());
 
@@ -46,8 +47,9 @@ public final class Task1Runner {
         System.out.println("Task 1 histogram written to: " + outputDir.resolve("community_size_histogram.csv"));
     }
 
-    private static void printProgress(long publicationCount, Task1CommunityTracker tracker) {
+    private static void printProgress(long publicationCount, CommunityTracker tracker) {
         List<Integer> top10 = tracker.topCommunitySizes(10);
+
         System.out.println("[Task1] publications=" + publicationCount
                 + " communities=" + tracker.communityCount()
                 + " top10=" + top10);

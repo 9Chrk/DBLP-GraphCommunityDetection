@@ -11,13 +11,13 @@ import java.util.TreeMap;
 /**
  * Online tracker for connected components in the undirected co-authorship graph.
  */
-public final class Task1CommunityTracker {
+public final class CommunityTracker {
 
     private final AuthorIndex authorIndex;
     private final DynamicUnionFind unionFind;
     private final TreeMap<Integer, Integer> sizeHistogram;
 
-    public Task1CommunityTracker() {
+    public CommunityTracker() {
         this.authorIndex = new AuthorIndex();
         this.unionFind = new DynamicUnionFind();
         this.sizeHistogram = new TreeMap<>();

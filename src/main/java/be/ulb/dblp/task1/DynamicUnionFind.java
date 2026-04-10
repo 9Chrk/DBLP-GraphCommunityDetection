@@ -38,6 +38,7 @@ public final class DynamicUnionFind {
             root = parent[root];
         }
 
+        // compression path
         int current = x;
         while (current != root) {
             int next = parent[current];
@@ -56,6 +57,7 @@ public final class DynamicUnionFind {
             return false;
         }
 
+        // swap (petit dans grand)
         if (size[rootA] < size[rootB]) {
             int tmp = rootA;
             rootA = rootB;
