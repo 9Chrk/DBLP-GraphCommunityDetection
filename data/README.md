@@ -1,24 +1,24 @@
-# Data directory
+# Repertoire des donnees
 
-This directory contains input datasets required to run the project.
+Ce dossier contient les jeux de donnees d'entree necessaires pour executer le projet.
 
-## External datasets
+## Jeux de donnees externes
 
-Large datasets such as the official DBLP XML dump are **NOT** versioned in Git.  
-Place them manually in:
+Les jeux de donnees volumineux, comme l'export XML officiel de DBLP, ne sont **PAS** versionnes dans Git.  
+Placez-les manuellement dans :
 
-```
+```text
 data/external/
 ```
 
-Expected files:
+Fichiers attendus :
 
-| File | Description | Download |
+| Fichier | Description | Telechargement |
 |------|-------------|---------|
-| `dblp.xml.gz` | Full DBLP XML dump (gzip-compressed) | <https://dblp.org/xml/dblp.xml.gz> |
-| `dblp.dtd` | DTD file for the XML parser | <https://dblp.org/xml/dblp.dtd> |
+| `dblp.xml.gz` | Export XML DBLP complet (compresse en gzip) | <https://dblp.org/xml/dblp.xml.gz> |
+| `dblp.dtd` | Fichier DTD utilise par le parseur XML | <https://dblp.org/xml/dblp.dtd> |
 
-> ⚠️ The uncompressed XML file is approximately 4 GB.  
-> The parser reads it in **streaming mode** — it is never fully loaded into memory.
-> 
-> `dblp.dtd` is included because it is required for deterministic offline parsing in the provided project setup and was distributed with the assignment materials.
+> ⚠️ Le fichier XML decompresse fait environ 4 Go.  
+> Le parseur le lit en **mode flux** : il n'est jamais charge entierement en memoire.
+>
+> `dblp.dtd` est inclus car il est necessaire pour une analyse hors ligne deterministe dans la configuration fournie, et il etait distribue avec les supports du projet.

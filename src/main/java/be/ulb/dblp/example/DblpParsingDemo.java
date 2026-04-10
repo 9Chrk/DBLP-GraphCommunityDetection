@@ -1,3 +1,7 @@
+package be.ulb.dblp.example;
+
+import be.ulb.dblp.parsing.DblpPublicationGenerator;
+
 import java.io.FileNotFoundException;
 import java.nio.file.*;
 import java.util.*;

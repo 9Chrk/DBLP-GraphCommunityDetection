@@ -1,44 +1,44 @@
-# DBLP Community Analysis
-![Java](https://img.shields.io/badge/Language-Java-F4C27A?style=flat-square&logo=openjdk&logoColor=3A2E2A)
-![Apache Maven](https://img.shields.io/badge/Build-Apache%20Maven-E8B4BC?style=flat-square&logo=apache-maven&logoColor=4A1F2B)
-![License: MIT](https://img.shields.io/badge/License-MIT-B7E4C7?style=flat-square&logoColor=1F3D2E)
+# Analyse de communautes DBLP
+![Java](https://img.shields.io/badge/Langage-Java-F4C27A?style=flat-square&logo=openjdk&logoColor=3A2E2A)
+![Apache Maven](https://img.shields.io/badge/Compilation-Apache%20Maven-E8B4BC?style=flat-square&logo=apache-maven&logoColor=4A1F2B)
+![License: MIT](https://img.shields.io/badge/Licence-MIT-B7E4C7?style=flat-square&logoColor=1F3D2E)
 
 
-A Java project for streaming analysis of DBLP collaboration networks, including connected-component detection on undirected co-authorship graphs and strongly connected community analysis on filtered directed collaboration graphs.
+Un projet Java pour l'analyse en streaming des reseaux de collaboration DBLP, incluant la detection de composantes connexes sur des graphes de co-signature non orientes et l'analyse de communautes fortement connexes sur des graphes de collaboration diriges filtres.
 
-> **Course:** Algorithmique 2 (INFO-F203) — BA2, Q2 — Université Libre de Bruxelles  
-> **Academic year:** 2025–2026
+> **Cours :** Algorithmique 2 (INFO-F203) — BA2, Q2 — Universite Libre de Bruxelles  
+> **Annee academique :** 2025-2026
 
 
 ---
 
-## Overview
+## Vue d'ensemble
 
-This project processes the [DBLP](https://dblp.org/) XML dataset in **streaming** fashion (SAX/StAX) to avoid loading the full ~4 GB dump into memory.  
-Two independent graph analysis tasks are implemented:
+Ce projet traite le jeu de donnees XML [DBLP](https://dblp.org/) en mode **streaming** (SAX/StAX) afin d'eviter de charger en memoire le dump complet (~4 Go).  
+Deux taches d'analyse de graphes independantes sont implementees :
 
-| Task | Graph type | Problem |
-|------|-----------|---------|
-| Task 1 | Undirected co-authorship graph | Find all connected components |
-| Task 2 | Filtered directed collaboration graph | Find all strongly connected components (communities) |
-
----
-
-## Features
-
-- ✅ Streaming XML parser (no full-DOM load)
-- ✅ Undirected graph construction from DBLP co-authorship data
-- ✅ Connected-component detection (Task 1)
-- ✅ Directed graph construction with configurable filters
-- ✅ Strongly connected component detection (Task 2)
-- ✅ Results written to `results/task1/` and `results/task2/`
-- ✅ JUnit 5 unit tests
+| Tache | Type de graphe | Probleme |
+|------|-----------------|----------|
+| Tache 1 | Graphe de co-signature non oriente | Trouver toutes les composantes connexes |
+| Tache 2 | Graphe de collaboration dirige filtre | Trouver toutes les composantes fortement connexes (communautes) |
 
 ---
 
-## 📂 Project Structure
+## Fonctionnalites
 
-```
+- ✅ Parseur XML en flux (sans chargement DOM complet)
+- ✅ Construction d'un graphe non oriente a partir des co-signatures DBLP
+- ✅ Detection des composantes connexes (Tache 1)
+- ✅ Construction d'un graphe dirige avec filtres configurables
+- ✅ Detection des composantes fortement connexes (Tache 2)
+- ✅ Resultats ecrits dans `results/task1/` et `results/task2/`
+- ✅ Tests unitaires JUnit 5
+
+---
+
+## 📂 Structure du projet
+
+```text
 dblp-graph-community-detection/
 ├── pom.xml
 ├── README.md
@@ -51,61 +51,61 @@ dblp-graph-community-detection/
 │       └── Projet_Algorithmique_2_2026.pdf
 │
 ├── data/
-│   ├── README.md            ← how to obtain the dataset
-│   └── external/            ← place <dblp.xml.gz> here (git-ignored)
-│       └── dblp.dtd         ← DTD file for the parser (included for convenience)
+│   ├── README.md            ← comment obtenir le jeu de donnees
+│   └── external/            ← placez <dblp.xml.gz> ici (ignore par Git)
+│       └── dblp.dtd         ← fichier DTD pour le parseur (fourni)
 │
 ├── results/
-│   ├── task1/               ← output files for Task 1
-│   └── task2/               ← output files for Task 2
+│   ├── task1/               ← fichiers de sortie pour la Tache 1
+│   └── task2/               ← fichiers de sortie pour la Tache 2
 │
 └── src/
     ├── main/java/be/ulb/dblp/
-    │   ├── Main.java                           ← entry point
-    │   ├── io/                                 ← file reading / writing helpers
-    │   ├── model/                              ← Graph, Node, Edge domain classes
-    │   ├── parsing/                            ← DBLP XML SAX/StAX parser
-    │   │    └── DblpPublicationGenerator.java  ← SAX parser implementation
+    │   ├── Main.java                           ← point d'entree
+    │   ├── io/                                 ← utilitaires de lecture/ecriture
+    │   ├── model/                              ← classes domaine (Graph, Node, Edge)
+    │   ├── parsing/                            ← analyseur XML DBLP SAX/StAX
+    │   │    └── DblpPublicationGenerator.java  ← implementation du parseur SAX
     │   │
-    │   ├── task1/            ← Task 1 algorithm & runner
-    │   ├── task2/            ← Task 2 algorithm & runner
-    │   ├── util/             ← shared helpers (timing, formatting, …)
-    │   └── example/          
-    │       └── ExampleParser.java  ← example of streaming parsing
+    │   ├── task1/            ← algorithme et lanceur de la Tache 1
+    │   ├── task2/            ← algorithme et lanceur de la Tache 2
+    │   ├── util/             ← utilitaires partages (timing, formatage, ...)
+    │   └── example/
+    │       └── ExampleParser.java  ← exemple d'analyse en flux
     │
     └── test/java/be/ulb/dblp/
 ```
 
 ---
 
-## ⚙️ Algorithms Used
+## ⚙️ Algorithmes utilises
 
-| Algorithm | Package | Time complexity | Space complexity |
-|-----------|---------|----------------|-----------------|
-| BFS / DFS (connected components) | `task1` | O(V + E) | O(V) |
-| Union-Find (optional, Task 1) | `util` | O(α(V) · E) | O(V) |
-| Kosaraju / Tarjan (SCC) | `task2` | O(V + E) | O(V) |
+| Algorithme | Paquet | Complexite temps | Complexite memoire |
+|-----------|---------|------------------|--------------------|
+| BFS / DFS (composantes connexes) | `task1` | O(V + E) | O(V) |
+| Union-Find (optionnel, Tache 1) | `util` | O(α(V) · E) | O(V) |
+| Kosaraju / Tarjan (CFC) | `task2` | O(V + E) | O(V) |
 
-> Exact choices and complexity proofs are detailed in the report (`docs/report/`).
+> Les choix exacts et les preuves de complexite sont detailles dans le rapport (`docs/report/`).
 
 ---
 
-## 🛠️ Build and Run
+## 🛠️ Compiler et executer
 
-### Prerequisites
+### Prerequis
 
 - Java 17+
 - Maven 3.8+
 
-### Build
+### Compilation
 
 ```bash
 mvn clean package
 ```
 
-This produces `target/dblp-community-analysis.jar` (executable fat-jar).
+Cela genere `target/dblp-community-analysis.jar` (JAR executable).
 
-### Run
+### Execution
 
 ```bash
 java -jar target/dblp-community-analysis.jar \
@@ -113,7 +113,7 @@ java -jar target/dblp-community-analysis.jar \
      data/external/dblp.dtd
 ```
 
-### Run via Maven (without building the jar first)
+### Execution via Maven (sans construire le jar au prealable)
 
 ```bash
 mvn exec:java -Dexec.args="data/external/dblp.xml.gz data/external/dblp.dtd"
@@ -121,48 +121,48 @@ mvn exec:java -Dexec.args="data/external/dblp.xml.gz data/external/dblp.dtd"
 
 ---
 
-## 💾 Input Data
+## 💾 Donnees d'entree
 
-| File | Description |
+| Fichier | Description |
 |------|-------------|
-| `dblp.xml.gz` | Full DBLP XML dump (gzip-compressed, ~4 GB uncompressed) |
-| `dblp.dtd` | DTD required by the SAX parser |
+| `dblp.xml.gz` | Export XML DBLP complet (compresse gzip, ~4 Go decompresse) |
+| `dblp.dtd` | DTD necessaire au parseur SAX |
 
-Download the latest snapshot from <https://dblp.org/xml/> and place both files in `data/external/`.  
-See [`data/README.md`](data/README.md) for details.
+Telechargez la derniere version depuis <https://dblp.org/xml/> et placez les deux fichiers dans `data/external/`.  
+Voir [`data/README.md`](data/README.md) pour les details.
 
 ---
 
-## �? Output Files
+## Fichiers de sortie
 
-| Path | Content |
+| Chemin | Contenu |
 |------|---------|
-| `results/task1/components.txt` | One connected component per line (list of author IDs) |
-| `results/task1/stats.txt` | Summary statistics (number of components, sizes, …) |
-| `results/task2/scc.txt` | One strongly connected component per line |
-| `results/task2/stats.txt` | Summary statistics |
+| `results/task1/components.txt` | Une composante connexe par ligne (liste d'identifiants auteurs) |
+| `results/task1/stats.txt` | Statistiques de synthese (nombre de composantes, tailles, ...) |
+| `results/task2/scc.txt` | Une composante fortement connexe par ligne |
+| `results/task2/stats.txt` | Statistiques de synthese |
 
-just an example!!!
+*Exemple de noms de fichiers de sortie (a adapter selon votre implementation).* 
 
 ---
 
-## Testing
+## Tests
 
 ```bash
 mvn test
 ```
 
-Unit tests are located under `src/test/java/be/ulb/dblp/`.
+Les tests unitaires sont dans `src/test/java/be/ulb/dblp/`.
 
 ---
 
-## Report
+## Rapport
 
-The report is available at [`docs/report/rapport.pdf`](docs/report/rapport.pdf), it details the implementation choices and the complexity of the algorithms used.
+Le rapport est disponible dans [`docs/report/rapport.pdf`](docs/report/rapport.pdf). Il detaille les choix d'implementation et la complexite des algorithmes utilises.
 
 ---
 
-## Complexity Notes
+## Notes de complexite
 
-The streaming approach ensures that memory usage is bounded by the size of the graph data structures, not the raw XML.  
-Full complexity analysis (time and space) for each algorithm is provided in the project report.
+L'approche en flux garantit que l'usage memoire est borne par la taille des structures de graphe, et non par la taille brute du XML.  
+L'analyse complete de complexite (temps et memoire) pour chaque algorithme est fournie dans le rapport du projet.
