@@ -4,7 +4,7 @@
 ![Licence : MIT](https://img.shields.io/badge/Licence-MIT-B7E4C7?style=flat-square&logoColor=1F3D2E)
 
 
-Un projet Java pour l'analyse en streaming des réseaux de collaboration DBLP, incluant la détection de composantes connexes sur des graphes de co-signature non orientés et l'analyse de communautés fortement connexes sur des graphes de collaboration dirigés filtrés.
+Un projet Java pour l'analyse de la base de données DBLP en traitement en flux (online), incluant la détection de communautés de co-publication sur un graphe non orienté et l'analyse de communautés dans un graphe orienté filtré.
 
 > **Cours :** Algorithmique 2 (INFO-F203) — BA2, Q2 — Université Libre de Bruxelles  
 > **Année académique :** 2025-2026
@@ -14,23 +14,23 @@ Un projet Java pour l'analyse en streaming des réseaux de collaboration DBLP, i
 
 ## Vue d'ensemble
 
-Ce projet traite le jeu de données XML [DBLP](https://dblp.org/) en mode **streaming** (SAX/StAX) afin d'éviter de charger en mémoire l'export complet (~4 Go).  
+Ce projet traite le fichier XML [DBLP](https://dblp.org/) en **traitement en flux (online)** afin d'éviter de charger en mémoire le snapshot complet (~4 Go).  
 Deux tâches d'analyse de graphes indépendantes sont implémentées :
 
 | Tâche | Type de graphe | Problème |
 |------|-----------------|----------|
-| Tâche 1 | Graphe de co-signature non orienté | Trouver toutes les composantes connexes |
-| Tâche 2 | Graphe de collaboration dirigé filtré | Trouver toutes les composantes fortement connexes (communautés) |
+| Tâche 1 | Graphe non orienté de co-publication | Maintenir les communautés en ligne (composantes connexes) |
+| Tâche 2 | Graphe orienté filtré (seuil >= 6) | Identifier les communautés fortement connexes |
 
 ---
 
 ## Fonctionnalités
 
-- ✅ Parseur XML en flux (sans chargement DOM complet)
-- ✅ Construction d'un graphe non orienté à partir des co-signatures DBLP
-- ✅ Détection des composantes connexes (Tâche 1)
-- ✅ Construction d'un graphe dirigé avec filtres configurables
-- ✅ Détection des composantes fortement connexes (Tâche 2)
+- ✅ Traitement en flux (online) publication par publication
+- ✅ Construction d'un graphe non orienté de co-publication
+- ✅ Maintien des communautés (composantes connexes) pour la Tâche 1
+- ✅ Comptage en ligne des paires ordonnées A -> B pour la Tâche 2
+- ✅ Analyse des communautés dans le graphe orienté filtré
 - ✅ Résultats écrits dans `results/task1/` et `results/task2/`
 - ✅ Tests unitaires JUnit 5
 
@@ -125,7 +125,7 @@ mvn exec:java -Dexec.args="data/external/dblp.xml.gz data/external/dblp.dtd"
 
 | Fichier | Description |
 |------|-------------|
-| `dblp.xml.gz` | Export XML DBLP complet (compressé gzip, ~4 Go décompressé) |
+| `dblp.xml.gz` | Snapshot XML DBLP (compressé gzip, ~4 Go décompressé) |
 | `dblp.dtd` | DTD nécessaire au parseur SAX |
 
 Téléchargez la dernière version depuis <https://dblp.org/xml/> et placez les deux fichiers dans `data/external/`.  
@@ -137,10 +137,10 @@ Voir [`data/README.md`](data/README.md) pour les détails.
 
 | Chemin | Contenu |
 |------|---------|
-| `results/task1/components.txt` | Une composante connexe par ligne (liste d'identifiants auteurs) |
-| `results/task1/stats.txt` | Statistiques de synthèse (nombre de composantes, tailles, ...) |
-| `results/task2/scc.txt` | Une composante fortement connexe par ligne |
-| `results/task2/stats.txt` | Statistiques de synthèse |
+| `results/task1/components.txt` | Communautés/composantes connexes (Tâche 1) |
+| `results/task1/stats.txt` | Histogramme des tailles et indicateurs intermédiaires |
+| `results/task2/scc.txt` | Communautés fortement connexes (graphe orienté filtré) |
+| `results/task2/stats.txt` | Tailles, diamètres et top 10 des plus grandes communautés |
 
 *Exemple de noms de fichiers de sortie (à adapter selon votre implémentation).* 
 
