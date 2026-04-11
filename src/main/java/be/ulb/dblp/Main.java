@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 
 /**
- * Entry point for the DBLP Community Analysis tool.
+ * Point d'entrée de l'application d'analyse de la communauté DBLP.
  *
  * <p>Usage:
  * <pre>

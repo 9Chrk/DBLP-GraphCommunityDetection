@@ -11,18 +11,26 @@ import java.util.Arrays;
  */
 public final class DynamicUnionFind {
 
+    // Lists
     private int[] parent;
     private int[] size;
 
+    // Compteurs
     private int elementCount;
     private int componentCount;
 
     public DynamicUnionFind() {
+        // Lists
         this.parent = new int[16];
         this.size = new int[16];
+
+        // Compteurs
         this.elementCount = 0;
         this.componentCount = 0;
     }
+
+
+    // ------------ Opérations de base ------------
 
     /**
      * Ajoute un nouvel élément et retourne son identifiant.
@@ -32,10 +40,15 @@ public final class DynamicUnionFind {
     public int addElement() {
         ensureCapacity(elementCount + 1);
         int id = elementCount;
+
+        // Lists
         parent[id] = id;
         size[id] = 1;
+
+        // Compteurs
         elementCount++;
         componentCount++;
+
         return id;
     }
 
@@ -77,9 +90,7 @@ public final class DynamicUnionFind {
         int rootA = find(a);
         int rootB = find(b);
 
-        if (rootA == rootB) {
-            return false;
-        }
+        if (rootA == rootB) return false;
 
         // On attache toujours la plus petite composante à la plus grande.
         if (size[rootA] < size[rootB]) {
@@ -91,8 +102,12 @@ public final class DynamicUnionFind {
         parent[rootB] = rootA;
         size[rootA] += size[rootB];
         componentCount--;
+
         return true;
     }
+
+
+    // ------------ Méthodes d'accès ------------
 
     /**
      * Retourne la taille de la composante contenant {@code x}.
@@ -124,13 +139,14 @@ public final class DynamicUnionFind {
         return componentCount;
     }
 
+
+    // ------------ gestion de la capacité ------------
+
     /**
      * Garantit que les tableaux internes peuvent accueillir {@code required} éléments.
      */
     private void ensureCapacity(int required) {
-        if (required <= parent.length) {
-            return;
-        }
+        if (required <= parent.length) return;
 
         int newCapacity = parent.length;
         while (newCapacity < required) {

@@ -13,16 +13,17 @@ import java.util.Map;
  */
 public final class AuthorIndex {
 
+    // Dictionnaire
+    private final Map<String, Integer> authorToId;
+
     /**
      * Résultat de la recherche d'un.e auteur.rice dans l'index.
      *
-     * @param id l'identifiant associé à cette auteurrice
+     * @param id l'identifiant associé à cette auteur.rice
      * @param created {@code true} si l'identifiant vient d'être créé, {@code false} sinon
      */
     public record LookupResult(int id, boolean created) {}
 
-    // Dictionnaire
-    private final Map<String, Integer> authorToId;
 
     /**
      * Crée un index prêt à accueillir un grand nombre d'auteur.rice.s,
@@ -43,11 +44,11 @@ public final class AuthorIndex {
         Integer existing = authorToId.get(author);
 
         if (existing != null) {
-            // L'auteurrice est déjà connue : on réutilise son identifiant.
+            // L'auteur.rice est déjà connue : on réutilise son identifiant.
             return new LookupResult(existing, false);
         }
 
-        // Nouvelle auteurrice : on crée un identifiant et on l'enregistre dans l'index.
+        // Nouvelle auteur.rice : on crée un identifiant et on l'enregistre dans l'index.
         int id = unionFind.addElement();
         authorToId.put(author, id);
         return new LookupResult(id, true);

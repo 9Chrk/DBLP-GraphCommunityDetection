@@ -26,17 +26,16 @@ public final class Runner {
     public static void run(Path xmlPath, Path dtdPath, Path outputDir, int reportEvery, long limit) throws Exception {
         Files.createDirectories(outputDir);
 
-        CommunityTracker tracker = new CommunityTracker();
         long publicationCount = 0;
+        CommunityTracker tracker = new CommunityTracker();
 
         // Le générateur DBLP fournit les publications une par une, sans charger tout le fichier en mémoire.
         try (DblpPublicationGenerator generator = new DblpPublicationGenerator(xmlPath, dtdPath, 256)) {
             while (publicationCount < limit) {
                 Optional<DblpPublicationGenerator.Publication> optional = generator.nextPublication();
 
-                if (optional.isEmpty()) {
-                    break;
-                }
+                if (optional.isEmpty()) break;
+
                 publicationCount++;
                 tracker.processPublication(optional.get());
 
@@ -49,9 +48,16 @@ public final class Runner {
 
         // L'histogramme final est écrit une fois le parsing terminé.
         writeHistogram(outputDir.resolve("community_size_histogram.csv"), tracker.histogramSnapshot());
+
+        // Affichage final
+        System.out.println("\n\nFinal state after processing " + publicationCount + " publications:\n");
         printProgress(publicationCount, tracker);
-        System.out.println("Task 1 histogram written to: " + outputDir.resolve("community_size_histogram.csv"));
+
+        System.out.println("\n\nTask 1 histogram written to: " + outputDir.resolve("community_size_histogram.csv"));
     }
+
+
+    // ----------- Méthodes utilitaires (affichage et sauvegarde) -----------
 
     /**
      * Affiche un état intermédiaire simple sur le terminal.
