@@ -50,7 +50,7 @@ public final class Runner {
         writeHistogram(outputDir.resolve("community_size_histogram.csv"), tracker.histogramSnapshot());
 
         // Affichage final
-        System.out.println("\n\nFinal state after processing " + publicationCount + " publications:\n");
+        System.out.println("\n\nFinal state after processing " + publicationCount + " publications:");
         printProgress(publicationCount, tracker);
 
         System.out.println("\n\nTask 1 histogram written to: " + outputDir.resolve("community_size_histogram.csv"));
