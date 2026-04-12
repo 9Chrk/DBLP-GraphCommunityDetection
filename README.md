@@ -99,24 +99,28 @@ dblp-graph-community-detection/
 
 ### Compilation
 
-```bash
+```powershell
 mvn clean package
 ```
 
 Cela génère `target/dblp-community-analysis.jar` (JAR exécutable).
 
-### Exécution
+Si vous voulez lancer le projet exactement avec `java -jar dblp-community-analysis.jar ...`, copiez d’abord le JAR à la racine du dépôt :
 
-```bash
-java -jar target/dblp-community-analysis.jar \
-     data/external/dblp.xml.gz \
-     data/external/dblp.dtd
+```powershell
+Copy-Item target\dblp-community-analysis.jar .\dblp-community-analysis.jar
 ```
 
-### Exécution via Maven (sans construire le JAR au préalable)
+### Exécution
 
-```bash
-mvn exec:java -Dexec.args="data/external/dblp.xml.gz data/external/dblp.dtd"
+```powershell
+java -jar target\dblp-community-analysis.jar data\external\dblp.xml.gz data\external\dblp.dtd
+```
+
+### Exécution via Maven (optionnelle)
+
+```powershell
+mvn --% exec:java -Dexec.args="data/external/dblp.xml.gz data/external/dblp.dtd"
 ```
 
 ---
