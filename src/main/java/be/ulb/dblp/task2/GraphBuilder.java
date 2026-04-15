@@ -2,8 +2,12 @@ package be.ulb.dblp.task2;
 
 import java.util.Map;
 
+
 /**
  * Construit le graphe orienté filtré à partir des compteurs A -> B.
+ *
+ * <p>Une arête est conservée uniquement si le nombre de publications communes entre deux
+ * auteurs atteint le seuil demandé.</p>
  */
 public final class GraphBuilder {
 
@@ -17,6 +21,7 @@ public final class GraphBuilder {
             String source = sourceEntry.getKey();
 
             for (Map.Entry<String, Integer> targetEntry : sourceEntry.getValue().entrySet()) {
+                // Le filtrage garde seulement les relations suffisamment fréquentes.
                 if (targetEntry.getValue() >= threshold) {
                     graph.addEdge(source, targetEntry.getKey());
                 }

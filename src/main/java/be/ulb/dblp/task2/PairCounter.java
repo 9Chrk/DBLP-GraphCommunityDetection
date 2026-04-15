@@ -8,13 +8,25 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * Compte en ligne les paires ordonnées A -> B pour la Tâche 2.
+ *
+ * <p>Chaque publication est nettoyée, les auteurs en double sont supprimés tout en gardant
+ * leur ordre d'apparition, puis les comptes sont mis à jour pour les couples
+ * {@code premierAuteur -> autresAuteurs}.</p>
  */
 public final class PairCounter {
 
     private final Map<String, Map<String, Integer>> counts = new HashMap<>();
 
+    /**
+     * Traite une publication et met à jour les comptes des paires orientées.
+     *
+     * <p>Les auteurs sont d'abord normalisés avec {@code trim()}, puis les valeurs nulles
+     * et vides sont ignorées. Le {@code LinkedHashSet} conserve l'ordre d'apparition tout en
+     * supprimant les doublons.</p>
+     */
     public void processPublication(DblpPublicationGenerator.Publication publication) {
         if (publication == null || publication.authors == null || publication.authors.isEmpty()) return;
 
@@ -37,10 +49,14 @@ public final class PairCounter {
         }
     }
 
+    /**
+     * Retourne une copie défensive de l'état courant des comptes.
+     */
     public Map<String, Map<String, Integer>> snapshot() {
         Map<String, Map<String, Integer>> copy = new HashMap<>();
 
         for (Map.Entry<String, Map<String, Integer>> entry : counts.entrySet()) {
+            // Chaque sous-carte est recopiée pour éviter toute modification externe de l'état interne.
             copy.put(entry.getKey(), new HashMap<>(entry.getValue()));
         }
 
