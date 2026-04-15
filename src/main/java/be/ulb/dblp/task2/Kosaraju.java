@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -48,27 +49,23 @@ public final class Kosaraju {
     }
 
     private static void dfsFinishOrder(String start, DirectedGraph graph, Set<String> visited, List<String> finishOrder) {
-        Deque<String> stack = new ArrayDeque<>();
-        Deque<String> postorder = new ArrayDeque<>();
+        Deque<NodeFrame> stack = new ArrayDeque<>();
 
-        stack.push(start);
+        stack.push(new NodeFrame(start, graph.reverseNeighbors(start).iterator()));
         visited.add(start);
 
         while (!stack.isEmpty()) {
-            String node = stack.pop();
-            postorder.push(node);
-
-            // On explore les prédécesseurs pour simuler la DFS récursive sur le graphe renversé.
-            for (String neighbor : graph.reverseNeighbors(node)) {
+            NodeFrame frame = stack.peek();
+            if (frame.iterator.hasNext()) {
+                String neighbor = frame.iterator.next();
                 if (!visited.contains(neighbor)) {
                     visited.add(neighbor);
-                    stack.push(neighbor);
+                    stack.push(new NodeFrame(neighbor, graph.reverseNeighbors(neighbor).iterator()));
                 }
+            } else {
+                stack.pop();
+                finishOrder.add(frame.node);
             }
-        }
-
-        while (!postorder.isEmpty()) {
-            finishOrder.add(postorder.pop());
         }
     }
 
@@ -88,6 +85,16 @@ public final class Kosaraju {
                     stack.push(neighbor);
                 }
             }
+        }
+    }
+
+    private static final class NodeFrame {
+        private final String node;
+        private final Iterator<String> iterator;
+
+        private NodeFrame(String node, Iterator<String> iterator) {
+            this.node = node;
+            this.iterator = iterator;
         }
     }
 }
