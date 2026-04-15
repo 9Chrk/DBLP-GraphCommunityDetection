@@ -111,16 +111,28 @@ Si vous voulez lancer le projet exactement avec `java -jar dblp-community-analys
 Copy-Item target\dblp-community-analysis.jar .\dblp-community-analysis.jar
 ```
 
-### Exécution
+### Exécution (Tâche 1 par défaut)
 
 ```powershell
 java -jar target\dblp-community-analysis.jar data\external\dblp.xml.gz data\external\dblp.dtd
 ```
 
+### Exécution de la Tâche 2
+
+```powershell
+java -jar target\dblp-community-analysis.jar data\external\dblp.xml.gz data\external\dblp.dtd --task=2
+```
+
+Vous pouvez aussi préciser un dossier de sortie :
+
+```powershell
+java -jar target\dblp-community-analysis.jar data\external\dblp.xml.gz data\external\dblp.dtd --task=2 --outputDir=results/task2
+```
+
 ### Exécution via Maven (optionnelle)
 
 ```powershell
-mvn --% exec:java -Dexec.args="data/external/dblp.xml.gz data/external/dblp.dtd"
+mvn --% exec:java -Dexec.args="data/external/dblp.xml.gz data/external/dblp.dtd --task=2"
 ```
 
 ---
@@ -141,12 +153,10 @@ Voir [`data/README.md`](data/README.md) pour les détails.
 
 | Chemin | Contenu |
 |------|---------|
-| `results/task1/components.txt` | Communautés/composantes connexes (Tâche 1) |
-| `results/task1/stats.txt` | Histogramme des tailles et indicateurs intermédiaires |
-| `results/task2/scc.txt` | Communautés fortement connexes (graphe orienté filtré) |
-| `results/task2/stats.txt` | Tailles, diamètres et top 10 des plus grandes communautés |
-
-*Exemple de noms de fichiers de sortie (à adapter selon votre implémentation).* 
+| `results/task1/community_size_histogram.csv` | Histogramme des tailles des composantes (Tâche 1) |
+| `results/task2/task2_component_sizes.csv` | Taille de chaque composante fortement connexe |
+| `results/task2/task2_top10.csv` | Top 10 des plus grandes composantes + diamètre orienté |
+| `results/task2/task2_top10_members.csv` | Membres (auteurs) des composantes du top 10 |
 
 ---
 
