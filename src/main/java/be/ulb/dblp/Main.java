@@ -63,7 +63,7 @@ public class Main {
         try {
             // TACHE 1 :
             Runner.run(xmlPath, dtdPath, outputDir, reportEvery, limit);
-            System.out.println("Done.\n");
+            System.out.println("Done.");
         }
         catch (Exception e) {
             System.err.println("Task 1 failed: " + e.getMessage());
