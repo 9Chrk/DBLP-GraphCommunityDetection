@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * Résultat final de la Tâche 2.
  */
-public record Task2Result(
+public record Result(
         List<Set<String>> components,
         List<ComponentSummary> top10
 ) {

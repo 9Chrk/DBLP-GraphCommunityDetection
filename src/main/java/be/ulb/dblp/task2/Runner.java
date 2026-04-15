@@ -27,7 +27,7 @@ public final class Runner {
         Files.createDirectories(outputDir);
 
         long publicationCount = 0;
-        Task2PairCounter pairCounter = new Task2PairCounter();
+        PairCounter pairCounter = new PairCounter();
 
         try (DblpPublicationGenerator generator = new DblpPublicationGenerator(xmlPath, dtdPath, 256)) {
             while (publicationCount < limit) {
@@ -43,11 +43,11 @@ public final class Runner {
             }
         }
 
-        DirectedGraph graph = Task2GraphBuilder.buildFilteredGraph(pairCounter.snapshot(), EDGE_THRESHOLD);
-        List<Set<String>> components = KosarajuScc.compute(graph);
-        List<Task2Result.ComponentSummary> top10 = computeTop10WithDiameter(graph, components, 10);
+        DirectedGraph graph = GraphBuilder.buildFilteredGraph(pairCounter.snapshot(), EDGE_THRESHOLD);
+        List<Set<String>> components = Kosaraju.compute(graph);
+        List<Result.ComponentSummary> top10 = computeTop10WithDiameter(graph, components, 10);
 
-        Task2Result result = new Task2Result(components, top10);
+        Result result = new Result(components, top10);
 
         writeComponentSizes(outputDir.resolve("task2_component_sizes.csv"), result.components());
         writeTop10(outputDir.resolve("task2_top10.csv"), result.top10());
@@ -58,14 +58,14 @@ public final class Runner {
         System.out.println("Task 2 outputs written to: " + outputDir);
     }
 
-    private static List<Task2Result.ComponentSummary> computeTop10WithDiameter(DirectedGraph graph,
-                                                                                List<Set<String>> components,
-                                                                                int limit) {
-        List<Task2Result.ComponentSummary> sorted = new ArrayList<>(components.size());
+    private static List<Result.ComponentSummary> computeTop10WithDiameter(DirectedGraph graph,
+                                                                          List<Set<String>> components,
+                                                                          int limit) {
+        List<Result.ComponentSummary> sorted = new ArrayList<>(components.size());
 
         for (int i = 0; i < components.size(); i++) {
             Set<String> members = components.get(i);
-            sorted.add(new Task2Result.ComponentSummary(i, members.size(), -1, members));
+            sorted.add(new Result.ComponentSummary(i, members.size(), -1, members));
         }
 
         sorted.sort((a, b) -> {
@@ -75,12 +75,12 @@ public final class Runner {
         });
 
         int topCount = Math.min(limit, sorted.size());
-        List<Task2Result.ComponentSummary> top = new ArrayList<>(topCount);
+        List<Result.ComponentSummary> top = new ArrayList<>(topCount);
 
         for (int i = 0; i < topCount; i++) {
-            Task2Result.ComponentSummary summary = sorted.get(i);
+            Result.ComponentSummary summary = sorted.get(i);
             int diameter = CommunityDiameter.compute(graph, summary.members());
-            top.add(new Task2Result.ComponentSummary(
+            top.add(new Result.ComponentSummary(
                     summary.componentId(),
                     summary.size(),
                     diameter,
@@ -103,25 +103,25 @@ public final class Runner {
         }
     }
 
-    private static void writeTop10(Path file, List<Task2Result.ComponentSummary> top10) throws IOException {
+    private static void writeTop10(Path file, List<Result.ComponentSummary> top10) throws IOException {
         try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
             writer.write("rank,component_id,size,diameter");
             writer.newLine();
 
             for (int i = 0; i < top10.size(); i++) {
-                Task2Result.ComponentSummary summary = top10.get(i);
+                Result.ComponentSummary summary = top10.get(i);
                 writer.write((i + 1) + "," + summary.componentId() + "," + summary.size() + "," + summary.diameter());
                 writer.newLine();
             }
         }
     }
 
-    private static void writeTop10Members(Path file, List<Task2Result.ComponentSummary> top10) throws IOException {
+    private static void writeTop10Members(Path file, List<Result.ComponentSummary> top10) throws IOException {
         try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
             writer.write("component_id,author");
             writer.newLine();
 
-            for (Task2Result.ComponentSummary summary : top10) {
+            for (Result.ComponentSummary summary : top10) {
                 List<String> members = new ArrayList<>(summary.members());
                 members.sort(Comparator.naturalOrder());
 

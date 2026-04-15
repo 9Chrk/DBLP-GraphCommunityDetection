@@ -10,9 +10,9 @@ import java.util.Set;
 /**
  * Implémentation simple de Kosaraju pour les CFC.
  */
-public final class KosarajuScc {
+public final class Kosaraju {
 
-    private KosarajuScc() {
+    private Kosaraju() {
     }
 
     public static List<Set<String>> compute(DirectedGraph graph) {

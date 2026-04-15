@@ -5,9 +5,9 @@ import java.util.Map;
 /**
  * Construit le graphe orienté filtré à partir des compteurs A -> B.
  */
-public final class Task2GraphBuilder {
+public final class GraphBuilder {
 
-    private Task2GraphBuilder() {
+    private GraphBuilder() {
     }
 
     public static DirectedGraph buildFilteredGraph(Map<String, Map<String, Integer>> counts, int threshold) {

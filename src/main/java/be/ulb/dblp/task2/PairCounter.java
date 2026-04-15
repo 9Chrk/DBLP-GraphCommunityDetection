@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Compte en ligne les paires ordonnées A -> B pour la Tâche 2.
  */
-public final class Task2PairCounter {
+public final class PairCounter {
 
     private final Map<String, Map<String, Integer>> counts = new HashMap<>();
 
