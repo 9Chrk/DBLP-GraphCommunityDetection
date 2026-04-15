@@ -19,11 +19,15 @@ public final class GraphBuilder {
 
         for (Map.Entry<String, Map<String, Integer>> sourceEntry : counts.entrySet()) {
             String source = sourceEntry.getKey();
+            graph.ensureNode(source);
 
             for (Map.Entry<String, Integer> targetEntry : sourceEntry.getValue().entrySet()) {
+                String target = targetEntry.getKey();
+                graph.ensureNode(target);
+
                 // Le filtrage garde seulement les relations suffisamment fréquentes.
                 if (targetEntry.getValue() >= threshold) {
-                    graph.addEdge(source, targetEntry.getKey());
+                    graph.addEdge(source, target);
                 }
             }
         }
