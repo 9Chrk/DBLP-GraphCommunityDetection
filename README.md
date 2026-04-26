@@ -96,6 +96,7 @@ dblp-graph-community-detection/
 
 - Java 17+
 - Maven 3.8+
+- Python 3 + `pip` (pour les histogrammes)
 
 ### Compilation
 
@@ -135,14 +136,30 @@ java -jar target\dblp-community-analysis.jar data\external\dblp.xml.gz data\exte
 mvn --% exec:java -Dexec.args="data/external/dblp.xml.gz data/external/dblp.dtd --task=2"
 ```
 
+### Visualisation des histogrammes (script Python)
+
+Après avoir généré les fichiers CSV (`results/task1/community_size_histogram.csv` et/ou `results/task2/task2_community_sizes.csv`), installez d'abord les dépendances Python :
+
+```powershell
+pip install -r requirements.txt
+```
+
+Puis exécutez le script :
+
+```powershell
+python scripts/plot_histograms.py
+```
+
+Les figures PNG sont écrites dans `results/task1/` et `results/task2/`.
+
 ---
 
 ## 💾 Données d'entrée
 
 | Fichier | Description |
 |------|-------------|
-| `dblp.xml.gz` | Snapshot XML DBLP (compressé gzip, ~4 Go décompressé) |
-| `dblp.dtd` | DTD nécessaire au parseur SAX |
+| `data/external/dblp.xml.gz` | Snapshot XML DBLP (compressé gzip, ~4 Go décompressé) |
+| `data/external/dblp.dtd` | DTD nécessaire au parseur SAX |
 
 Téléchargez la dernière version depuis <https://dblp.org/xml/> et placez les deux fichiers dans `data/external/`.  
 Voir [`data/README.md`](data/README.md) pour les détails.
