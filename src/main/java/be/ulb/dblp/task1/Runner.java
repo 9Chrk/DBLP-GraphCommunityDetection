@@ -80,7 +80,7 @@ public final class Runner {
 
             // Chaque ligne représente une taille de communauté et le nombre de fois où elle apparaît.
             for (Map.Entry<Integer, Integer> entry : histogram.entrySet()) {
-                writer.write(entry.getKey() + ";" + entry.getValue());
+                writer.write(entry.getKey() + "," + entry.getValue());
                 writer.newLine();
             }
         }
