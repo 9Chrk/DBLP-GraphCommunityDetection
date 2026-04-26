@@ -129,10 +129,10 @@ public final class Runner {
             members.sort(Comparator.naturalOrder());
 
             System.out.println("#" + (i + 1)
-                    + " | component=" + summary.componentId()
-                    + " | size=" + summary.size()
-                    + " | diameter=" + summary.diameter());
-            System.out.println("authors: " + String.join("; ", members));
+                    + " | Component=" + summary.componentId()
+                    + " | Size=" + summary.size()
+                    + " | Diameter=" + summary.diameter());
+            System.out.println("Authors: " + String.join("; ", members));
         }
     }
 }
