@@ -1,4 +1,5 @@
 from pathlib import Path
+import math
 import re
 
 import matplotlib.pyplot as plt
@@ -13,12 +14,27 @@ TASKS = (
         RESULTS_DIR / "task1" / "community_size_histogram.csv",
         RESULTS_DIR / "task1" / "community_size_histogram",
         "Histogramme des tailles des communautés - Tâche 1",
+        True,
+        False,
+        "Taille des communautés (classes logarithmiques)",
     ),
     (
-        "task2",
+        "task2_aggregated",
         RESULTS_DIR / "task2" / "task2_community_sizes.csv",
-        RESULTS_DIR / "task2" / "task2_community_sizes",
+        RESULTS_DIR / "task2" / "task2_community_sizes_aggregated",
         "Histogramme des tailles des communautés - Tâche 2",
+        True,
+        False,
+        "Taille des communautés (classes logarithmiques)",
+    ),
+    (
+        "task2_log_scale",
+        RESULTS_DIR / "task2" / "task2_community_sizes.csv",
+        RESULTS_DIR / "task2" / "task2_community_sizes_log_scale",
+        "Histogramme des tailles des communautés - Tâche 2",
+        False,
+        True,
+        "Taille des communautés",
     ),
 )
 
@@ -43,7 +59,35 @@ def read_histogram(csv_path):
     return sizes, counts
 
 
-def plot_histogram(csv_path, output_base, title):
+def aggregate_log_bins(sizes, counts):
+    bins = {}
+
+    for size, count in zip(sizes, counts):
+        if size <= 0:
+            continue
+
+        bin_index = int(math.log2(size))
+        bins[bin_index] = bins.get(bin_index, 0) + count
+
+    labels = []
+    aggregated_counts = []
+
+    for bin_index in sorted(bins):
+        start = 2 ** bin_index
+        end = (2 ** (bin_index + 1)) - 1
+
+        if start == end:
+            label = str(start)
+        else:
+            label = f"{start}-{end}"
+
+        labels.append(label)
+        aggregated_counts.append(bins[bin_index])
+
+    return labels, aggregated_counts
+
+
+def plot_histogram(task_name, csv_path, output_base, title, use_log_bins, use_log_xscale, xlabel):
     if not csv_path.exists():
         print(f"Fichier introuvable, ignoré: {csv_path}")
         return
@@ -54,9 +98,21 @@ def plot_histogram(csv_path, output_base, title):
         return
 
     plt.figure(figsize=(10, 6))
-    plt.bar(sizes, counts)
-    plt.xlabel("Taille des communautés")
+
+    if use_log_bins:
+        labels, plot_counts = aggregate_log_bins(sizes, counts)
+        plt.bar(labels, plot_counts)
+        plt.xticks(rotation=45, ha="right")
+    else:
+        plt.bar(sizes, counts)
+
+    plt.xlabel(xlabel)
+
+    if use_log_xscale:
+        plt.xscale("log")
+
     plt.ylabel("Nombre de communautés")
+    plt.yscale("log")
     plt.title(title)
     plt.tight_layout()
     plt.savefig(f"{output_base}.png", dpi=300)
@@ -64,5 +120,5 @@ def plot_histogram(csv_path, output_base, title):
     plt.close()
 
 
-for _, input_path, output_base, title in TASKS:
-    plot_histogram(input_path, output_base, title)
+for task_name, input_path, output_base, title, use_log_bins, use_log_xscale, xlabel in TASKS:
+    plot_histogram(task_name, input_path, output_base, title, use_log_bins, use_log_xscale, xlabel)
