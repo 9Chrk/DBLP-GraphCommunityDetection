@@ -68,6 +68,9 @@ public final class Runner {
         System.out.println("\nTask 2 histogram written to: " + outputDir.resolve("task2_community_sizes.csv"));
     }
 
+
+    // ----------- Méthodes utilitaires (calcul du top 10, affichage et sauvegarde) -----------
+
     private static List<Result.ComponentSummary> computeTop10WithDiameter(DirectedGraph graph,
                                                                           List<Set<String>> components) {
         List<Result.ComponentSummary> sorted = new ArrayList<>(components.size());

@@ -2,6 +2,7 @@ package be.ulb.dblp;
 
 import java.nio.file.Path;
 
+
 /**
  * Point d'entrée de l'application d'analyse de la communauté DBLP.
  *
@@ -18,14 +19,17 @@ public class Main {
             System.exit(1);
         }
 
+        // Data (dblp)
         Path xmlPath = Path.of(args[0]);
         Path dtdPath = Path.of(args[1]);
 
+        // Paramètres d'exécution par défaut
         int task = 1;
         long limit = Long.MAX_VALUE;
         int reportEvery = 100000;
         Path outputDir = Path.of("results", "task1");
 
+        // Récupération des paramètres d'exécution optionnels
         for (int i = 2; i < args.length; i++) {
             String arg = args[i];
 
@@ -47,11 +51,13 @@ public class Main {
             outputDir = Path.of("results", "task2");
         }
 
+        // Supression des limites d'expansion d'entités XML pour éviter les erreurs de parsing sur le fichier DBLP.
         System.setProperty("jdk.xml.entityExpansionLimit", "0");
         System.setProperty("jdk.xml.totalEntitySizeLimit", "0");
         System.setProperty("jdk.xml.maxGeneralEntitySizeLimit", "0");
         System.setProperty("jdk.xml.maxParameterEntitySizeLimit", "0");
 
+        // Affichage des paramètres d'exécution
         System.out.println("DBLP Community Analysis - Task " + task);
         System.out.println("  XML        : " + xmlPath);
         System.out.println("  DTD        : " + dtdPath);
@@ -60,6 +66,7 @@ public class Main {
         System.out.println("  outputDir  : " + outputDir);
         System.out.println();
 
+        // Lancement des tâches :
         try {
             if (task == 1) {
                 be.ulb.dblp.task1.Runner.run(xmlPath, dtdPath, outputDir, reportEvery, limit);

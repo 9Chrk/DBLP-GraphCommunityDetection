@@ -59,17 +59,17 @@ dblp-graph-community-detection/
 │   ├── task1/               ← fichiers de sortie pour la Tâche 1
 │   └── task2/               ← fichiers de sortie pour la Tâche 2
 │
+├── scripts/
+│   └── plot_histograms.py   ← script Python pour visualiser les histogrammes de taille de communauté
+│
 └── src/
     ├── main/java/be/ulb/dblp/
     │   ├── Main.java                           ← point d'entrée
-    │   ├── io/                                 ← utilitaires de lecture/ecriture
-    │   ├── model/                              ← classes du domaine (Graph, Node, Edge)
     │   ├── parsing/                            ← analyseur XML DBLP SAX/StAX
     │   │    └── DblpPublicationGenerator.java  ← implémentation du parseur SAX
     │   │
     │   ├── task1/            ← algorithme et lanceur de la Tâche 1
     │   ├── task2/            ← algorithme et lanceur de la Tâche 2
-    │   ├── util/             ← utilitaires partagés (timing, formatage, ...)
     │   └── example/
     │       └── ExampleParser.java  ← exemple d'analyse en flux
     │

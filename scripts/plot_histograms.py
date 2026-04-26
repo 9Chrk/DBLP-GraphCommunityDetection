@@ -116,7 +116,6 @@ def plot_histogram(task_name, csv_path, output_base, title, use_log_bins, use_lo
     plt.title(title)
     plt.tight_layout()
     plt.savefig(f"{output_base}.png", dpi=300)
-    plt.savefig(f"{output_base}.pdf")
     plt.close()
 
 
