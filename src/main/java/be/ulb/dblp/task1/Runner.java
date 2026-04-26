@@ -75,7 +75,7 @@ public final class Runner {
      */
     private static void writeHistogram(Path file, Map<Integer, Integer> histogram) throws IOException {
         try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
-            writer.write("taille;nombre_de_communautes");
+            writer.write("community_size;count");
             writer.newLine();
 
             // Chaque ligne représente une taille de communauté et le nombre de fois où elle apparaît.
