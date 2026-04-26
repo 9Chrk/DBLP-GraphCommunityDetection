@@ -154,9 +154,8 @@ Voir [`data/README.md`](data/README.md) pour les détails.
 | Chemin | Contenu |
 |------|---------|
 | `results/task1/community_size_histogram.csv` | Histogramme des tailles des composantes (Tâche 1) |
-| `results/task2/task2_component_sizes.csv` | Taille de chaque composante fortement connexe |
-| `results/task2/task2_top10.csv` | Top 10 des plus grandes composantes + diamètre orienté |
-| `results/task2/task2_top10_members.csv` | Membres (auteurs) des composantes du top 10 |
+| `results/task2/task2_community_sizes.csv` | Histogramme des tailles des composantes fortement connexes (`community_size,count`) |
+| Terminal (stdout) | Top 10 des plus grandes composantes avec leur taille, leur diamètre et les auteurs |
 
 ---
 

@@ -10,12 +10,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 
 
 /**
- * Exécute la Tâche 2 en traitement en flux, puis écrit les fichiers CSV de sortie.
+ * Exécute la Tâche 2 en traitement en flux, puis écrit les sorties demandées.
  *
  * <p>Le runner lit le flux DBLP publication par publication, construit les compteurs
  * nécessaires pour les arêtes orientées, filtre ensuite le graphe selon le seuil demandé
@@ -57,14 +59,13 @@ public final class Runner {
 
         Result result = new Result(components, top10);
 
-        // Chaque fichier CSV correspond à une vue différente du résultat final.
-        writeComponentSizes(outputDir.resolve("task2_component_sizes.csv"), result.components());
-        writeTop10(outputDir.resolve("task2_top10.csv"), result.top10());
-        writeTop10Members(outputDir.resolve("task2_top10_members.csv"), result.top10());
+        // Comme pour la Tâche 1, on ne génère qu'un seul CSV pour l'histogramme des tailles.
+        writeCommunitySizeHistogram(outputDir.resolve("task2_community_sizes.csv"), result.components());
 
         System.out.println("\nTask 2 completed after " + publicationCount + " publications.");
         System.out.println("Task 2 SCC count: " + result.components().size());
-        System.out.println("Task 2 outputs written to: " + outputDir);
+        printTop10(result.top10());
+        System.out.println("\nTask 2 histogram written to: " + outputDir.resolve("task2_community_sizes.csv"));
     }
 
     private static List<Result.ComponentSummary> computeTop10WithDiameter(DirectedGraph graph,
@@ -101,53 +102,37 @@ public final class Runner {
         return top;
     }
 
-    private static void writeComponentSizes(Path file, List<Set<String>> components) throws IOException {
+    private static void writeCommunitySizeHistogram(Path file, List<Set<String>> components) throws IOException {
+        Map<Integer, Integer> histogram = new TreeMap<>();
+
+        for (Set<String> component : components) {
+            histogram.merge(component.size(), 1, Integer::sum);
+        }
+
         try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
-            writer.write("component_id,size");
+            writer.write("community_size,count");
             writer.newLine();
 
-            for (int i = 0; i < components.size(); i++) {
-                writer.write(i + "," + components.get(i).size());
+            for (Map.Entry<Integer, Integer> entry : histogram.entrySet()) {
+                writer.write(entry.getKey() + "," + entry.getValue());
                 writer.newLine();
             }
         }
     }
 
-    private static void writeTop10(Path file, List<Result.ComponentSummary> top10) throws IOException {
-        try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
-            writer.write("rank,component_id,size,diameter");
-            writer.newLine();
+    private static void printTop10(List<Result.ComponentSummary> top10) {
+        System.out.println("\nTop 10 largest SCCs:");
 
-            for (int i = 0; i < top10.size(); i++) {
-                Result.ComponentSummary summary = top10.get(i);
-                writer.write((i + 1) + "," + summary.componentId() + "," + summary.size() + "," + summary.diameter());
-                writer.newLine();
-            }
+        for (int i = 0; i < top10.size(); i++) {
+            Result.ComponentSummary summary = top10.get(i);
+            List<String> members = new ArrayList<>(summary.members());
+            members.sort(Comparator.naturalOrder());
+
+            System.out.println("#" + (i + 1)
+                    + " | component=" + summary.componentId()
+                    + " | size=" + summary.size()
+                    + " | diameter=" + summary.diameter());
+            System.out.println("authors: " + String.join("; ", members));
         }
-    }
-
-    private static void writeTop10Members(Path file, List<Result.ComponentSummary> top10) throws IOException {
-        try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
-            writer.write("component_id,author");
-            writer.newLine();
-
-            for (Result.ComponentSummary summary : top10) {
-                List<String> members = new ArrayList<>(summary.members());
-                members.sort(Comparator.naturalOrder());
-
-                for (String author : members) {
-                    writer.write(summary.componentId() + "," + escapeCsv(author));
-                    writer.newLine();
-                }
-            }
-        }
-    }
-
-    private static String escapeCsv(String value) {
-        if (value == null) return "";
-        if (!value.contains(",") && !value.contains("\"") && !value.contains("\n")) return value;
-
-        String escaped = value.replace("\"", "\"\"");
-        return "\"" + escaped + "\"";
     }
 }
