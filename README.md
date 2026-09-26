@@ -8,7 +8,7 @@ DBLP Graph Community Detection est un **outil d’analyse des communautés d’a
 
 Le fichier XML est traité publication par publication pour éviter de charger l’ensemble du document en mémoire. Deux analyses sont proposées : les composantes connexes du graphe de co-publication et les composantes fortement connexes d’un graphe orienté filtré.
 
-> Projet académique ULB — INFO-F203.
+> Projet académique ULB — INFO-F203
 > Algorithmique 2 · 2025–2026
 
 ---
@@ -26,6 +26,7 @@ Le fichier XML est traité publication par publication pour éviter de charger l
 - [Tests](#tests)
 - [Notes de complexité](#notes-de-complexite)
 - [Documentation](#documentation)
+- [Licence](#licence)
 
 <a id="vue-densemble"></a>
 
@@ -215,3 +216,9 @@ L'analyse complète de complexité (temps et mémoire) pour chaque algorithme es
 ## 📄 Documentation
 
 Le rapport est disponible dans [`docs/report/rapport.pdf`](docs/report/rapport.pdf). Il détaille les choix d'implémentation et la complexité des algorithmes utilisés.
+
+<a id="licence"></a>
+
+## 📜 Licence
+
+Ce projet est distribué sous licence [MIT](LICENSE).
