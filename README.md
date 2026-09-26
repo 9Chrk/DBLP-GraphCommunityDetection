@@ -27,8 +27,6 @@ Le fichier XML est traité publication par publication pour éviter de charger l
 - [Notes de complexité](#notes-de-complexite)
 - [Documentation](#documentation)
 
----
-
 <a id="vue-densemble"></a>
 
 ## 🔎 Vue d’ensemble
@@ -40,8 +38,6 @@ Deux tâches d'analyse de graphes indépendantes sont implémentées :
 |------|-----------------|----------|
 | Tâche 1 | Graphe non orienté de co-publication | Maintenir les communautés en ligne (composantes connexes) |
 | Tâche 2 | Graphe orienté filtré (seuil >= 6) | Identifier les communautés fortement connexes |
-
----
 
 <a id="fonctionnalites"></a>
 
@@ -55,8 +51,6 @@ Deux tâches d'analyse de graphes indépendantes sont implémentées :
 - Résultats écrits dans `results/task1/` et `results/task2/`
 - Tests unitaires JUnit 5
 
----
-
 <a id="prerequis"></a>
 
 ## 🧰 Prérequis
@@ -64,8 +58,6 @@ Deux tâches d'analyse de graphes indépendantes sont implémentées :
 - Java 17+
 - Maven 3.8+
 - Python 3 + `pip` (pour les histogrammes)
-
----
 
 <a id="compilation-et-lancement"></a>
 
@@ -125,8 +117,6 @@ python scripts/plot_histograms.py
 
 Les figures PNG sont écrites dans `results/task1/` et `results/task2/`.
 
----
-
 <a id="donnees-dentree"></a>
 
 ## 🗃️ Données d’entrée
@@ -139,8 +129,6 @@ Les figures PNG sont écrites dans `results/task1/` et `results/task2/`.
 Téléchargez la dernière version depuis <https://dblp.org/xml/> et placez les deux fichiers dans `data/external/`.  
 Voir [`data/README.md`](data/README.md) pour les détails.
 
----
-
 <a id="resultats"></a>
 
 ## 📊 Résultats
@@ -150,8 +138,6 @@ Voir [`data/README.md`](data/README.md) pour les détails.
 | `results/task1/community_size_histogram.csv` | Histogramme des tailles des composantes (Tâche 1) |
 | `results/task2/task2_community_sizes.csv` | Histogramme des tailles des composantes fortement connexes (`community_size,count`) |
 | Terminal (stdout) | Top 10 des plus grandes composantes avec leur taille, leur diamètre et les auteurs |
-
----
 
 <a id="algorithmes-utilises"></a>
 
@@ -164,8 +150,6 @@ Voir [`data/README.md`](data/README.md) pour les détails.
 | Kosaraju / Tarjan (CFC) | `task2` | O(V + E) | O(V) |
 
 > Les choix exacts et les preuves de complexité sont détaillés dans le rapport (`docs/report/`).
-
----
 
 <a id="structure-du-projet"></a>
 
@@ -209,8 +193,6 @@ dblp-graph-community-detection/
     └── test/java/be/ulb/dblp/
 ```
 
----
-
 <a id="tests"></a>
 
 ## 🧪 Tests
@@ -221,16 +203,12 @@ mvn test
 
 Les tests unitaires sont dans `src/test/java/be/ulb/dblp/`.
 
----
-
 <a id="notes-de-complexite"></a>
 
 ## 🧮 Notes de complexité
 
 L'approche en flux garantit que l'usage mémoire est borné par la taille des structures de graphe, et non par la taille brute du XML.  
 L'analyse complète de complexité (temps et mémoire) pour chaque algorithme est fournie dans le rapport du projet.
-
----
 
 <a id="documentation"></a>
 
